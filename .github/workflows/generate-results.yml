@@ -1,0 +1,24 @@
+name: Cron job for generating test results
+on:
+  schedule: 
+    - cron: '42 12 * * *' # run the job once a day
+  workflow_dispatch: # enable manual trigger for dev and test
+jobs:
+  remote_write:
+    name: Generate compliance results for remote_write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Check out repo and update results"
+        run: |
+          THISRUN=$(date +%s)
+          git clone https://github.com/prometheus/compliance.git $GITHUB_WORKSPACE/documents/compliance
+          go test --tags=compliance -v $GITHUB_WORKSPACE/documents/compliance/remote_write > $GITHUB_WORKSPACE/results/$THISRUN_remote_write
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "noreply@github.com"
+          git add $THISRUN_results
+          if [ ! $(git status --porcelain | tee /dev/fd/2 | wc -c) -eq 0 ]; then
+            git commit -m "auto-generated results for remote_write on $THISRUN"
+            git push
+          fi
+          echo DONE generating remote_write results
