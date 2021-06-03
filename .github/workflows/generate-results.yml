@@ -11,9 +11,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: "Check out repo and update results"
         run: |
-          THISRUN=$(date +%s)
           cd remote_write/
-          go test --tags=compliance -v ./ > ../results/$THISRUN_remote_write
+          ./generate-results.sh
           git config --global user.name "GitHub Actions"
           git config --global user.email "noreply@github.com"
           git add results/$THISRUN_remote_write
@@ -21,4 +20,4 @@ jobs:
             git commit -m "auto-generated results for remote_write on $THISRUN"
             git push
           fi
-          echo DONE generating remote_write results
+          echo DONE
