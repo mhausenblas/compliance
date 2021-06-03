@@ -12,7 +12,8 @@ jobs:
       - name: "Check out repo and update results"
         run: |
           THISRUN=$(date +%s)
-          go test --tags=compliance -v remote_write/ > results/$THISRUN_remote_write
+          cd remote_write/
+          go test --tags=compliance -v ./ > ../results/$THISRUN_remote_write
           git config --global user.name "GitHub Actions"
           git config --global user.email "noreply@github.com"
           git add results/$THISRUN_remote_write
