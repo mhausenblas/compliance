@@ -10,9 +10,6 @@ jobs:
     steps:
       - name: "Check out compliance harness"
         uses: actions/checkout@v2
-        with:
-          repository: "prometheus/compliance"
-          path: compliance
       - name: "Set up Go environment"
         uses: actions/setup-go@v2
         with:
