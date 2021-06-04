@@ -24,7 +24,7 @@ fi
 ###############################################################################
 ### Main
 
-go test --tags=compliance -v ./ > ${outputdoc}
+go test --tags=compliance -v ./
 echo "The results are now available in $outputdoc"
 git config --global user.name "GitHub Actions"
 git config --global user.email "noreply@github.com"
