@@ -16,11 +16,4 @@ jobs:
         run: |
           cd remote_write/
           ./generate-results.sh
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "noreply@github.com"
-          git add results/$THISRUN_remote_write
-          if [ ! $(git status --porcelain | tee /dev/fd/2 | wc -c) -eq 0 ]; then
-            git commit -m "auto-generated results for remote_write on $THISRUN"
-            git push
-          fi
           echo DONE
