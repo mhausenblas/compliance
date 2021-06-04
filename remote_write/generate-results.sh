@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
@@ -24,7 +23,7 @@ fi
 ###############################################################################
 ### Main
 
-go test --tags=compliance -v ./
+go test --tags=compliance -json ./ > ${outputdoc}
 echo "The results are now available in $outputdoc"
 git config --global user.name "GitHub Actions"
 git config --global user.email "noreply@github.com"
